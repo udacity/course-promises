@@ -1,0 +1,17 @@
+{
+	"meta": "Promises videos",
+	"videos": [
+		{
+		  "title": "Sample Title 1",
+		  "artist": "Cameron Pittman",
+		  "shortDescription": "This is Cam's awesome video",
+		  "imageURL": "http://fistfuloftalent.com/wp-content/uploads/2013/04/awesome-interview-questions-for-candidates-600x320.jpg"
+		},
+		{
+		  "title": "Sample Title 2",
+		  "artist": "Cameron Pittman",
+		  "shortDescription": "yes! yes! yes!",
+		  "imageURL": "http://blogs.mercurynews.com/giants/files/2014/09/Pence-speech.jpg"
+		}
+	]
+}
