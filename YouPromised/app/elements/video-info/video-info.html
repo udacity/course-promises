@@ -1,0 +1,55 @@
+<!--
+@license
+Copyright (c) 2015 Udacity. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+
+<dom-module id="video-info">
+  <template>
+    <style include="shared-styles"></style>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <paper-material elevation="1">
+	    <h2 class="page-title"><span>{{greeting}}</span></h2>
+	    <span class="paper-font-body2">Update text to change the greeting.</span>
+	    <!-- Listens for "input" event and sets greeting to <input>.value -->
+	    <input class="paper-font-body2" value="{{greeting::input}}">
+    </paper-material>
+  </template>
+
+  <script>
+    (function () {
+      'use strict';
+
+      Polymer({
+        is: 'video-info',
+        properties: {
+          items: {
+            type: Array,
+            notify: true
+          }
+        },
+        ready: function() {
+          this.items = [
+            'Responsive Web App boilerplate',
+            'Iron Elements and Paper Elements',
+            'End-to-end Build Tooling (including Vulcanize)',
+            'Unit testing with Web Component Tester',
+            'Routing with Page.js',
+            'Offline support with the Platinum Service Worker Elements'
+          ];
+        }
+      });
+    })();
+  </script>
+
+</dom-module>
