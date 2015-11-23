@@ -27,26 +27,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.route = 'home';
     });
 
-    page('/users', scrollToTop, function() {
-      app.route = 'users';
-    });
-
-    page('/info/:title', scrollToTop, function(data) {
-      app.route = 'user-info';
+    page('/video-info/:title', scrollToTop, function(data) {
+      app.route = 'video-info';
       app.params = data.params;
-    });
-
-    page('/users', scrollToTop, function() {
-      app.route = 'users';
-    });
-
-    page('/users/:name', scrollToTop, function(data) {
-      app.route = 'user-info';
-      app.params = data.params;
-    });
-
-    page('/contact', scrollToTop, function() {
-      app.route = 'contact';
     });
 
     // add #! before urls

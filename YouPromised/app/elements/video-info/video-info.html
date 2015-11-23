@@ -4,32 +4,17 @@ Copyright (c) 2015 Udacity. All rights reserved.
 -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<dom-module id="video-thumbnail">
+<dom-module id="video-info">
   <template>
     <style include="shared-styles"></style>
     <style>
       :host {
         display: block;
       }
-      a {
-        text-decoration: none;
-        color: #111111;
-      }
-      .info {
-      	padding-left: 32px;
-      }
     </style>
-    <a href$="/video-info/{{id}}">
-	  	<div class="layout horizontal">
-	    	<div class="img">
-	    			    <img height="90" width="160" src="{{imageURL}}" alt="Video thumbnail for {{artist}}: {{title}}">
-	    	</div>
-	    	<div class="info">
-	    			    <p>{{artist}}: {{title}}</p>
-	    			    <p>{{shortDescription}}</p>
-	    	</div>
-	  	</div>
-  	</a>
+    	<div class="layout horizontal">
+		    <p>Title: {{title}}</p>
+    	</div>
   </template>
 
   <script>
@@ -37,7 +22,7 @@ Copyright (c) 2015 Udacity. All rights reserved.
       'use strict';
 
       Polymer({
-        is: 'video-thumbnail',
+        is: 'video-info',
         properties: {
           title: {
             type: String,
@@ -53,10 +38,6 @@ Copyright (c) 2015 Udacity. All rights reserved.
           },
           shortDescription: {
           	type: String,
-          	notify: true
-          },
-          id: {
-          	type: Number,
           	notify: true
           }
         },
