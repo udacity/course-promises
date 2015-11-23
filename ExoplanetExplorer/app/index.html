@@ -87,14 +87,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             <section data-route="home"></section>
 
-            <section data-route="users">
-              <paper-material elevation="1">
-                <h2 class="page-title">Users</h2>
-                <p>This is the users section</p>
-                <a href="/users/Rob">Rob</a>
-              </paper-material>
-            </section>
-
             <section data-route="video-info"></section>
 
           </iron-pages>
@@ -120,6 +112,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     -->
 
   </template>
+
+  <!-- for parsing CSV to JSON -->
+  <script src="scripts/papaparse.min.js"></script>
 
   <!-- build:js scripts/app.js -->
   <script src="scripts/app.js"></script>

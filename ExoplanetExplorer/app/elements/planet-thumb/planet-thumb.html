@@ -1,0 +1,65 @@
+<!--
+@license
+Copyright (c) 2015 Udacity. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="video-thumbnail">
+  <template>
+    <style include="shared-styles"></style>
+    <style>
+      :host {
+        display: block;
+      }
+      .info {
+      	padding-left: 32px;
+      }
+    </style>
+    	<div class="layout horizontal">
+		    <div class="img">
+			    <img height="100" width="100" src="{{imageURL}}" alt="Video thumbnail for {{artist}}: {{title}}">
+		    </div>
+		    <div class="info">
+			    <p>{{artist}}: {{title}}</p>
+			    <p>{{shortDescription}}</p>
+		    </div>
+    	</div>
+  </template>
+
+  <script>
+    (function () {
+      'use strict';
+
+      Polymer({
+        is: 'video-thumbnail',
+        properties: {
+          title: {
+            type: String,
+            notify: true
+          },
+          artist: {
+          	type: String,
+          	notify: true
+          },
+          imageURL: {
+          	type: String,
+          	notify: true
+          },
+          shortDescription: {
+          	type: String,
+          	notify: true
+          }
+        },
+        ready: function() {
+          // nothing for now
+        }
+      });
+    })();
+  </script>
+
+</dom-module>
