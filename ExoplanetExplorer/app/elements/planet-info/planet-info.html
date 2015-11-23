@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<dom-module id="video-thumbnail">
+<dom-module id="planet-info">
   <template>
     <style include="shared-styles"></style>
     <style>
@@ -17,18 +17,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
       .info {
-      	padding-left: 32px;
+        padding-left: 32px;
       }
     </style>
-    	<div class="layout horizontal">
-		    <div class="img">
-			    <img height="100" width="100" src="{{imageURL}}" alt="Video thumbnail for {{artist}}: {{title}}">
-		    </div>
-		    <div class="info">
-			    <p>{{artist}}: {{title}}</p>
-			    <p>{{shortDescription}}</p>
-		    </div>
-    	</div>
+      <div class="layout horizontal">
+        <div class="img">
+          <img height="100" width="100" src="{{imageURL}}" alt="Video thumbnail for {{artist}}: {{title}}">
+        </div>
+        <div class="info">
+          <p>{{artist}}: {{title}}</p>
+          <p>{{shortDescription}}</p>
+        </div>
+      </div>
   </template>
 
   <script>
@@ -36,24 +36,96 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       'use strict';
 
       Polymer({
-        is: 'video-thumbnail',
+        is: 'planet-info',
         properties: {
-          title: {
+          name: {
             type: String,
             notify: true
           },
-          artist: {
-          	type: String,
-          	notify: true
+          radius: {
+            type: Object,
+            notify: true
           },
-          imageURL: {
-          	type: String,
-          	notify: true
+          distance: {
+            type: Number,
+            notify: true
           },
-          shortDescription: {
-          	type: String,
-          	notify: true
-          }
+          mass: {
+            type: Object,
+            notify: true
+          },
+          density: {
+            type: Number,
+            notify: true
+          },
+          temperature: {
+            type: Number,
+            notify: true
+          },
+          ra: {
+            type: Number,
+            notify: true
+          },
+          dec: {
+            type: Number,
+            notify: true
+          },
+          orbitalPeriod: {
+            type: Number,
+            notify: true
+          },
+          numberMoons: {
+            type: Number,
+            notify: true
+          },
+          stellarRadiiDist: {
+            type: Number,
+            notify: true
+          },
+          stellarRadii: {
+            type: Number,
+            notify: true
+          },
+          binary: {
+            type: Boolean,
+            notify: true
+          },
+          stellarSpectralType: {
+            type: String,
+            notify: true
+          },
+          stellarAge: {
+            type: Number,
+            notify: true
+          },
+          numberPlanets: {
+            type: Number,
+            notify: true
+          },
+          telescope: {
+            type: String,
+            notify: true
+          },
+          discoveryYear: {
+            type: Number,
+            notify: true
+          },
+          discoveryMethod: {
+            type: String,
+            notify: true
+          },
+          discoveryFacility: {
+            type: String,
+            notify: true
+          },
+          pelink: {
+            type: String,
+            notify: true
+          },
+          edelink: {
+            type: String,
+            notify: true
+          },
         },
         ready: function() {
           // nothing for now

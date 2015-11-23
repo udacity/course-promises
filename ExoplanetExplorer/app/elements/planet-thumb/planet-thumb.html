@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<dom-module id="video-thumbnail">
+<dom-module id="planet-thumbnail">
   <template>
     <style include="shared-styles"></style>
     <style>
@@ -36,23 +36,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       'use strict';
 
       Polymer({
-        is: 'video-thumbnail',
+        is: 'planet-thumbnail',
         properties: {
-          title: {
+          name: {
             type: String,
             notify: true
           },
-          artist: {
-          	type: String,
+          radius: {
+          	type: Object,
           	notify: true
           },
-          imageURL: {
-          	type: String,
+          distance: {
+          	type: Number,
           	notify: true
           },
-          shortDescription: {
-          	type: String,
+          mass: {
+            type: Object,
+            notify: true
+          },
+          temperature: {
+          	type: Number,
           	notify: true
+          },
+          telescope: {
+            type: String,
+            notify: true
+          },
+          discoveryYear: {
+            type: Number,
+            notify: true
           }
         },
         ready: function() {
