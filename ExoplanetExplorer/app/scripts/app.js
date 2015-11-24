@@ -3,8 +3,8 @@
 
   var home = null;
 
-  function csvToJSON(csv) {
-    return Papa.parse(csv, {header: true});
+  function addSearchHeader(string) {
+    home.innerHTML = '<h2 class="page-title">query: ' + string + '</h2>';
   };
 
   function createPlanetThumb(data) {
@@ -58,7 +58,7 @@
     home = document.querySelector('section[data-route="home"]');
     getJSON('/data/earth-like-results.json')
       .then(function(d) {
-        home.innerHTML = '<h2 class="page-title">' + d.query + '</h2>';
+        addSearchHeader(d.query);
         return d.results;
       })
       .then(function(urls) {

@@ -1,5 +1,5 @@
 {
-	"query": "earth like planets",
+	"query": "earth-like planets",
 	"results": [
 		"data/planets/GJ667Cc.json",
 		"data/planets/Kepler-22b.json",
