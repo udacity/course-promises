@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<dom-module id="planet-thumbnail">
+<dom-module id="planet-thumb">
   <template>
     <style include="shared-styles"></style>
     <style>
@@ -20,14 +20,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       	padding-left: 32px;
       }
     </style>
-    	<div class="layout horizontal">
-		    <div class="img">
-			    <img height="100" width="100" src="{{imageURL}}" alt="Video thumbnail for {{artist}}: {{title}}">
-		    </div>
-		    <div class="info">
-			    <p>{{artist}}: {{title}}</p>
-			    <p>{{shortDescription}}</p>
-		    </div>
+    	<div class="layout vertical">
+        <p>Planet</p>
+		    <p>name: {{pl_name}}</p>
+		    <p>mass: {{mass.hi}}</p>
     	</div>
   </template>
 
@@ -36,9 +32,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       'use strict';
 
       Polymer({
-        is: 'planet-thumbnail',
+        is: 'planet-thumb',
         properties: {
-          name: {
+          pl_name: {
             type: String,
             notify: true
           },

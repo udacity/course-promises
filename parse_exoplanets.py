@@ -1,13 +1,16 @@
 #!/usr/local/bin/python
-
-# API: http://exoplanetarchive.ipac.caltech.edu/docs/API_exoplanet_columns.html
-
-# import requests
 import csv
 import json
+import os
 
-jsonfile = open('file.json', 'w')
-csvfile = open('data.csv', 'rb')
+jsondir = 'ExoplanetExplorer/app/data/planets'
+# jsonfile = open('app/data/earth-like-data.json', 'w')
+csvfile = open('earth-like-data.csv', 'rb')
+
+if not os.path.exists(jsondir):
+    os.makedirs(jsondir)
+
+# API: http://exoplanetarchive.ipac.caltech.edu/docs/API_exoplanet_columns.html
 
 # earth-like
 # http://www.space.com/30172-six-most-earth-like-alien-planets.html
@@ -15,11 +18,10 @@ csvfile = open('data.csv', 'rb')
 # potentially habitable
 # https://en.wikipedia.org/wiki/List_of_potentially_habitable_exoplanets
 
-fieldnames = ['pl_hostname','pl_letter','ra','dec']
+fieldnames = ['pl_name','pl_rade','pl_masse','pl_radj','pl_massj','pl_dens','st_dist','pl_disc','pl_telescope','pl_eqt','pl_discmethod','pl_facility','pl_mnum','pl_pelink','pl_edelink','pl_cbflag','pl_orbper','pl_pnum','ra','dec','st_spstr','st_age','pl_ratdor','st_rad','rowupdate']
 reader = csv.DictReader(csvfile, fieldnames)
-out = json.dumps([row for row in reader])
-jsonfile.write(out)
 
-# for names - csv to json, altogether in data
-#   - include a search parameter: something like "habitable"
-# for data - csv to json, each planet individually in data/planets
+for row in reader:
+    jsonfile = open(jsondir + '/' + row['pl_name'].replace(' ', '') + '.json', 'w+')
+    out = json.dumps(row)
+    jsonfile.write(out)
