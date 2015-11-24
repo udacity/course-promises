@@ -12,28 +12,67 @@ Copyright (c) 2015 Udacity. All rights reserved.
       :host {
         display: block;
       }
-      .comparison {
-      	background: #000000;
-        max-width: 200px;
+      svg {
+        display: block;
+      }
+      circle {
+        transform: translate(30px, 50px);
+      }
+      .planet-comparison {
+        background: #000000;
+        width: 180px;
+        height: 100px;
+      }
+      .no-radius {
+        color: white;
+        font-size: 2em;
+        padding-left: 35px;
+      }
+      .no-radius::after{
+        content: "?";
+      }
+      earth-img {
+        padding-top: 20px;
+        padding-right: 10px;
+      }
+      @media screen and (max-width: 435px) {
+        .top {
+          /* I'm only doing this because I have to... */
+          display: block !important;
+        }
+      }
+      @media screen and (min-width: 436px) {
+        .top {
+          display: flex;
+        }
+        .planet-comparison {
+        }
+        .top-right {
+          padding-left: 32px;
+        }
+        .title {
+          margin-top: 0px;
+          font-weight: bold;
+          font-size: 1.2em;
+        }
       }
     </style>
-	    <h3>{{pl_name}}</h3>
-      <div class="layout vertical">
-        <div class="comparison layout horizontal">
-          <earth-img width="60px"></earth-img>
-          <svg>
-            <g fill="gold" stroke="darkgoldenrod" stroke-width="0.5">
-              <circle r="30" transform="translate(30,30)" />
-            </g>
-          </svg>
-        </div>
-        <p>discovery year: {{pl_disc}}</p>
-        <p>discovery telescope: {{pl_telescope}}</p>
-        <p>distance to star (pc): {{st_dist}}</p>
-        <p>earth radii: {{pl_rade}}</p>
-        <p>jupiter radii: {{pl_radj}}</p>
-		    <p>temperature (K): {{pl_eqt}}</p>
-    	</div>
+    <div class="top layout horizontal">
+      <div class="planet-comparison layout horizontal justified">
+        <p class="no-radius" hidden="{{radiusScale}}"></p>
+        <svg width="90px">
+          <g fill$="{{color}}" stroke-width="0.5">
+            <circle r$="{{exoHalfWidth}}" />
+          </g>
+        </svg>
+        <earth-img width="60px"></earth-img>
+      </div>
+      <div class="top-right">
+        <p class="title">{{pl_name}}</p>
+        <p>{{distance}} lightyears away</p>
+        <p>Discovered in {{pl_disc}} with {{pl_telescope}}</p>
+      </div>
+    </div>
   </template>
 
   <script>
@@ -55,9 +94,38 @@ Copyright (c) 2015 Udacity. All rights reserved.
           	type: Number,
           	notify: true
           },
+          radiusScale: {
+            type: Number,
+            computed: 'getRadiusScale(pl_rade, pl_radj)',
+            observer: 'changeSizes'
+          },
+          exoHalfWidth: {
+            type: Number,
+            notify: true,
+            value: 40
+          },
+          exoDisplay: {
+            type: String,
+            notify: true,
+            value: "none"
+          },
+          exoTranslateX: {
+            type: Number,
+            notify: true,
+            value: 0
+          },
+          exoTranslateY: {
+            type: Number,
+            notify: true,
+            value: 0
+          },
           st_dist: {
           	type: Number,
           	notify: true
+          },
+          distance: {
+            type: Number,
+            computed: 'pcToLy(st_dist)'
           },
           pl_massj: {
             type: Number,
@@ -69,7 +137,14 @@ Copyright (c) 2015 Udacity. All rights reserved.
           },
           pl_eqt: {
           	type: Number,
-          	notify: true
+          	notify: true,
+            value: 0
+          },
+          color: {
+            type: String,
+            notify: true,
+            computed: 'tempToColor(pl_eqt)',
+            value: 'brown'
           },
           pl_telescope: {
             type: String,
@@ -81,8 +156,35 @@ Copyright (c) 2015 Udacity. All rights reserved.
           }
         },
         ready: function() {
-          // if missing pl_rade, try to convert pl_radj
-          //    otherwise, leave placeholder
+          // something?
+        },
+        getRadiusScale: function(earthRad, jupiterRad) {
+          // don't have either radius
+          if (!earthRad && !jupiterRad) {
+            return 0;
+          } else if (earthRad) {
+            return earthRad;
+          } else {
+            return jupiterRad * 11.2;
+          }
+        },
+        pcToLy: function(dist) {
+          // gotta respect sigfigs
+          let digits = dist.toString().length;
+          var ly = (dist / 3.26).toString();
+          ly = ly.slice(0,digits);
+          return ly;
+        },
+        tempToColor: function(temp) {
+          return "brown";
+        },
+        changeSizes: function() {
+          this.exoHalfWidth = 30 * this.radiusScale;
+          if (this.exoHalfWidth > 60) {
+            let diff = 30 - (this.exoHalfWidth - 60);
+            this.querySelector('circle').style.transform = "translate(" + diff + "px, 50px)";
+            this.querySelector('circle').style.webkitTransform = "translate(" + diff + "px, 50px)";
+          }
         }
       });
     })();
