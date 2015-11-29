@@ -39,6 +39,9 @@ Copyright (c) 2015 Udacity. All rights reserved.
         .top {
           /* I'm only doing this because I have to... */
           display: block !important;
+          /* TODO: center */
+          margin-left: auto;
+          margin-right: auto;
         }
       }
       @media screen and (min-width: 436px) {
@@ -57,22 +60,24 @@ Copyright (c) 2015 Udacity. All rights reserved.
         }
       }
     </style>
-    <div class="top layout horizontal">
-      <div class="planet-comparison layout horizontal justified">
-        <p class="no-radius" hidden="{{radiusScale}}"></p>
-        <svg width="90px">
-          <g fill$="{{color}}" stroke-width="0.5">
-            <circle r$="{{exoHalfWidth}}" />
-          </g>
-        </svg>
-        <earth-img width="60px"></earth-img>
+    <a href$="/planet/{{pl_name}}" on-click="setContext">
+      <div class="top layout horizontal">
+        <div class="planet-comparison layout horizontal justified">
+          <p class="no-radius" hidden="{{radiusScale}}"></p>
+          <svg width="200px">
+            <g fill$="{{color}}" stroke-width="0.5">
+              <circle r$="{{exoHalfWidth}}" />
+            </g>
+          </svg>
+          <earth-img width="60px"></earth-img>
+        </div>
+        <div class="top-right">
+          <p class="title">{{pl_name}}</p>
+          <p>{{distance}} lightyears away</p>
+          <p>Discovered in {{pl_disc}} with {{pl_telescope}}</p>
+        </div>
       </div>
-      <div class="top-right">
-        <p class="title">{{pl_name}}</p>
-        <p>{{distance}} lightyears away</p>
-        <p>Discovered in {{pl_disc}} with {{pl_telescope}}</p>
-      </div>
-    </div>
+    </a>
   </template>
 
   <script>
@@ -148,15 +153,23 @@ Copyright (c) 2015 Udacity. All rights reserved.
           },
           pl_telescope: {
             type: String,
-            notify: true
+            notify: true,
+            value: 'unknown'
           },
           pl_disc: {
             type: Number,
-            notify: true
+            notify: true,
+            value: 'unknown'
           }
         },
         ready: function() {
-          // something?
+          // console.log(this.properties);
+        },
+        setContext: function() {
+          // var planetInfo = document.querySelector('planet-info');
+          // for (let d in this.planetInfo) {
+          //   planetInfo[d] = this.planetInfo[d];
+          // }
         },
         getRadiusScale: function(earthRad, jupiterRad) {
           // don't have either radius
@@ -179,11 +192,15 @@ Copyright (c) 2015 Udacity. All rights reserved.
           return "brown";
         },
         changeSizes: function() {
+          let circle = this.querySelector('circle');
           this.exoHalfWidth = 30 * this.radiusScale;
+
           if (this.exoHalfWidth > 60) {
             let diff = 30 - (this.exoHalfWidth - 60);
-            this.querySelector('circle').style.transform = "translate(" + diff + "px, 50px)";
-            this.querySelector('circle').style.webkitTransform = "translate(" + diff + "px, 50px)";
+            circle.style.transform = "translate(" + diff + "px, 50px)";
+            circle.style.webkitTransform = "translate(" + diff + "px, 50px)";
+          } else if (this.exoHalfWidth === 0) {
+            circle.style.display = "none";
           }
         }
       });

@@ -1,19 +1,22 @@
-(function(document) {
+;var loader = (function(document) {
   'use strict';
 
   var home = null;
+  var planetInfos = [];
 
   function addSearchHeader(string) {
     home.innerHTML = '<h2 class="page-title">query: ' + string + '</h2>';
   };
 
   function createPlanetThumb(data) {
+    planetInfos.push({name: data.pl_name, data: data});
     var pM = document.createElement('paper-material');
     pM.elevation = '1';
     var pT = document.createElement('planet-thumb');
     for (let d in data) {
       pT[d] = data[d];
     }
+    pT.planetInfo = data;
     pM.appendChild(pT);
     home.appendChild(pM);
   }
@@ -53,10 +56,9 @@
     return get(url).then(JSON.parse);
   };
 
-  // See https://github.com/Polymer/polymer/issues/1381
-  window.addEventListener('WebComponentsReady', function() {
+  function loadSequence() {
     home = document.querySelector('section[data-route="home"]');
-    getJSON('/data/earth-like-results.json')
+    return getJSON('/data/earth-like-results.json')
       .then(function(d) {
         addSearchHeader(d.query);
         return d.results;
@@ -71,6 +73,17 @@
           });
         }, Promise.resolve())
       })
-  });
+      .then(function() {
+        return planetInfos;
+      })
+  };
 
+  window.addEventListener('WebComponentsReady', function() {
+    // loadSequence()
+  });
+  return {
+    get: get,
+    getJSON: getJSON,
+    loadSequence: loadSequence
+  }
 })(document);

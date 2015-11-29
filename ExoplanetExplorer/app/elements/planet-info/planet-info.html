@@ -1,11 +1,6 @@
 <!--
 @license
 Copyright (c) 2015 Udacity. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
@@ -21,14 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
       <div class="layout horizontal">
-        <div class="img">
-          <img height="100" width="100" src="{{imageURL}}" alt="Video thumbnail for {{artist}}: {{title}}">
-        </div>
-        <div class="info">
-          <p>{{artist}}: {{title}}</p>
-          <p>{{shortDescription}}</p>
-        </div>
-      </div>
+      <div>Full info for: {{pl_name}}, which is {{st_dist}}pc away.</div>
   </template>
 
   <script>
@@ -38,97 +26,68 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       Polymer({
         is: 'planet-info',
         properties: {
-          name: {
+          pl_name: {
             type: String,
-            notify: true
+            notify: true,
+            value: "unknown"
           },
-          radius: {
-            type: Object,
-            notify: true
-          },
-          distance: {
+          pl_rade: {
             type: Number,
             notify: true
           },
-          mass: {
-            type: Object,
-            notify: true
-          },
-          density: {
+          pl_radj: {
             type: Number,
             notify: true
           },
-          temperature: {
+          exoHalfWidth: {
             type: Number,
-            notify: true
+            notify: true,
+            value: 40
           },
-          ra: {
-            type: Number,
-            notify: true
-          },
-          dec: {
-            type: Number,
-            notify: true
-          },
-          orbitalPeriod: {
-            type: Number,
-            notify: true
-          },
-          numberMoons: {
-            type: Number,
-            notify: true
-          },
-          stellarRadiiDist: {
-            type: Number,
-            notify: true
-          },
-          stellarRadii: {
-            type: Number,
-            notify: true
-          },
-          binary: {
-            type: Boolean,
-            notify: true
-          },
-          stellarSpectralType: {
+          exoDisplay: {
             type: String,
-            notify: true
+            notify: true,
+            value: "none"
           },
-          stellarAge: {
+          exoTranslateX: {
+            type: Number,
+            notify: true,
+            value: 0
+          },
+          exoTranslateY: {
+            type: Number,
+            notify: true,
+            value: 0
+          },
+          st_dist: {
             type: Number,
             notify: true
           },
-          numberPlanets: {
+          pl_massj: {
             type: Number,
             notify: true
           },
-          telescope: {
-            type: String,
-            notify: true
-          },
-          discoveryYear: {
+          pl_masse: {
             type: Number,
             notify: true
           },
-          discoveryMethod: {
-            type: String,
-            notify: true
+          pl_eqt: {
+            type: Number,
+            notify: true,
+            value: 0
           },
-          discoveryFacility: {
+          pl_telescope: {
             type: String,
-            notify: true
+            notify: true,
+            value: 'unknown'
           },
-          pelink: {
-            type: String,
-            notify: true
-          },
-          edelink: {
-            type: String,
-            notify: true
-          },
+          pl_disc: {
+            type: Number,
+            notify: true,
+            value: 'unknown'
+          }
         },
         ready: function() {
-          // nothing for now
         }
       });
     })();

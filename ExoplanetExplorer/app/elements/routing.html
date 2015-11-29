@@ -9,7 +9,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <script src="../bower_components/page/page.js"></script>
+<script src="../scripts/app.js"></script>
 <script>
+  'use strict';
+
   window.addEventListener('WebComponentsReady', function() {
 
     // We use Page.js for routing. This is a Micro
@@ -17,13 +20,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // More info: https://visionmedia.github.io/page.js/
 
     // Middleware
+    var planetInfos = [];
+
+    function loadRoot(ctx, next) {
+      loader.loadSequence()
+      .then(function(data) {
+        planetInfos = data;
+        next();
+      });
+
+      app.scrollPageToTop();
+    }
+
     function scrollToTop(ctx, next) {
       app.scrollPageToTop();
       next();
     }
 
     // Routes
-    page('/', scrollToTop, function() {
+    page('/', loadRoot, function(ctx) {
       app.route = 'home';
     });
 
@@ -31,9 +46,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.route = 'users';
     });
 
-    page('/planet/:name', scrollToTop, function(data) {
+    page('/planet/:name', scrollToTop, function(ctx) {
       app.route = 'planet';
-      app.params = data.params;
+      var planetInfo = document.querySelector('planet-info');
+      new Promise(function(resolve, reject) {
+        var planet = null;
+        planet = planetInfos.find(function(p) {
+          if (p.name === ctx.params.name) {
+            return true;
+          }
+        });
+        if (planet) {
+          resolve(planet.data);
+        } else {
+          reject();
+        }
+      }).catch(function() {
+        return loader.getJSON('/data/planets/' + ctx.params.name.replace(/ /g, '') + '.json')
+      })
+      .then(function(data) {
+        for (let d in data) {
+          planetInfo[d] = data[d];
+        }
+      })
     });
 
     page('/contact', scrollToTop, function() {
