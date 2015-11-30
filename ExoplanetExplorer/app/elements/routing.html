@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <script src="../bower_components/page/page.js"></script>
+<!-- Proj: Will need to add before moving routing logic -->
 <script src="../scripts/app.js"></script>
 <script>
   'use strict';
@@ -20,6 +21,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // More info: https://visionmedia.github.io/page.js/
 
     // Middleware
+    
+    // Proj: will need to uncomment this to maintain planet info
     var planetInfos = [];
 
     function loadRoot(ctx, next) {
@@ -44,10 +47,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     page('/search/:query', scrollToTop, function() {
       app.route = 'users';
+      // when searching, will need to add to planetInfos
+      // TODO: two search states: 1) load every planet at start, and 2) load specific planets on search
     });
 
     page('/planet/:name', scrollToTop, function(ctx) {
       app.route = 'planet';
+      // Proj: will need to add logic here to load planet-info
       var planetInfo = document.querySelector('planet-info');
       new Promise(function(resolve, reject) {
         var planet = null;

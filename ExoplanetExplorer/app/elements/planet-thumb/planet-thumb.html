@@ -15,6 +15,11 @@ Copyright (c) 2015 Udacity. All rights reserved.
       svg {
         display: block;
       }
+      a {
+        text-decoration: none;
+        color: #212121;
+        cursor: pointer;
+      }
       circle {
         transform: translate(30px, 50px);
       }
@@ -60,24 +65,26 @@ Copyright (c) 2015 Udacity. All rights reserved.
         }
       }
     </style>
-    <a href$="/planet/{{pl_name}}" on-click="setContext">
-      <div class="top layout horizontal">
-        <div class="planet-comparison layout horizontal justified">
-          <p class="no-radius" hidden="{{radiusScale}}"></p>
-          <svg width="200px">
-            <g fill$="{{color}}" stroke-width="0.5">
-              <circle r$="{{exoHalfWidth}}" />
-            </g>
-          </svg>
-          <earth-img width="60px"></earth-img>
+    <paper-material elevation="1">
+      <a href$="/planet/{{pl_name}}">
+        <div class="top layout horizontal">
+          <div class="planet-comparison layout horizontal justified">
+            <p class="no-radius" hidden="{{radiusScale}}"></p>
+            <svg width="200px">
+              <g fill$="{{color}}" stroke-width="0.5">
+                <circle r$="{{exoHalfWidth}}" />
+              </g>
+            </svg>
+            <earth-img width="60px"></earth-img>
+          </div>
+          <div class="top-right">
+            <p class="title">{{pl_name}}</p>
+            <p>{{distance}} lightyears away</p>
+            <p>Discovered in {{pl_disc}} with {{pl_telescope}}</p>
+          </div>
         </div>
-        <div class="top-right">
-          <p class="title">{{pl_name}}</p>
-          <p>{{distance}} lightyears away</p>
-          <p>Discovered in {{pl_disc}} with {{pl_telescope}}</p>
-        </div>
-      </div>
-    </a>
+      </a>
+    </paper-material>
   </template>
 
   <script>
@@ -101,28 +108,15 @@ Copyright (c) 2015 Udacity. All rights reserved.
           },
           radiusScale: {
             type: Number,
+            notify: true,
             computed: 'getRadiusScale(pl_rade, pl_radj)',
             observer: 'changeSizes'
+            // value: 7
           },
           exoHalfWidth: {
             type: Number,
             notify: true,
             value: 40
-          },
-          exoDisplay: {
-            type: String,
-            notify: true,
-            value: "none"
-          },
-          exoTranslateX: {
-            type: Number,
-            notify: true,
-            value: 0
-          },
-          exoTranslateY: {
-            type: Number,
-            notify: true,
-            value: 0
           },
           st_dist: {
           	type: Number,
@@ -162,17 +156,7 @@ Copyright (c) 2015 Udacity. All rights reserved.
             value: 'unknown'
           }
         },
-        ready: function() {
-          // console.log(this.properties);
-        },
-        setContext: function() {
-          // var planetInfo = document.querySelector('planet-info');
-          // for (let d in this.planetInfo) {
-          //   planetInfo[d] = this.planetInfo[d];
-          // }
-        },
         getRadiusScale: function(earthRad, jupiterRad) {
-          // don't have either radius
           if (!earthRad && !jupiterRad) {
             return 0;
           } else if (earthRad) {

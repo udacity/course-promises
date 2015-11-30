@@ -1,0 +1,156 @@
+<!--
+@license
+Copyright (c) 2015 Udacity. All rights reserved.
+-->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../earth-img/earth-img.html">
+<link rel="import" href="../jupiter-img/jupiter-img.html">
+
+<dom-module id="planet-visualizer">
+  <template>
+    <style include="shared-styles"></style>
+    <style>
+      :host {
+        display: block;
+      }
+      svg {
+        display: block;
+        margin-top: auto;
+        margin-right: auto;
+        height: 100%;
+      }
+      circle {
+        transform: translate(30px, 100px);
+        /*transform: translate(30px, 50px);*/
+      }
+      .planet-comparison {
+        background: #000000;
+        width: 180px;
+        height: 100px;
+      }
+      @media screen and (min-width: 600px) {
+        .planet-comparison {
+          width: 360px;
+          height: 200px;
+        }
+      }
+      .no-radius {
+        color: white;
+        font-size: 2em;
+        padding-left: 35px;
+      }
+      .no-radius::after{
+        content: "?";
+      }
+      earth-img,jupiter-img {
+        padding-right: 10px;
+        margin-top: auto;
+        margin-bottom: auto;
+      }
+      earth-img {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
+    <div class="planet-comparison layout horizontal justified">
+      <p class="no-radius" hidden$="{{hasRadius(earthRadii)}}"></p>
+      <svg width="200px">
+        <g fill$="{{color}}" stroke-width="0.5">
+          <circle id="planet" r$="{{exoHalfWidth}}" />
+        </g>
+      </svg>
+      <earth-img width="{{earthWidth}}px"></earth-img>
+      <jupiter-img width="60px" hidden$="{{isSmall(earthRadii)}}"></jupiter-img>
+    </div>
+  </template>
+
+  <script>
+    (function () {
+      'use strict';
+
+      Polymer({
+        is: 'planet-visualizer',
+        properties: {
+          earthRadii: {
+            type: Number,
+            notify: true,
+            observer: 'changeSizes'
+          },
+          earthWidth: {
+            type: Number,
+            notify: true,
+            value: 60
+          },
+          jupiterWidth: {
+            type: Number,
+            notify: true,
+            value: 60
+          },
+          comparisonWidth: {
+            type: Number,
+            notify: true,
+            value: 60
+          },
+          cutoff: {
+            type: Number,
+            value: 7
+          },
+          exoHalfWidth: {
+            type: Number,
+            notify: true,
+            value: 40
+          },
+          color: {
+            type: String,
+            notify: true,
+            value: 'blue'
+          }
+        },
+        ready: function() {
+          // need to get screen size to figure out scale
+          console.log(this.comparisonWidth);
+          // use getComputedStyle for vvvvvv
+          console.log(this.querySelector('.planet-comparison'));
+        },
+        hasRadius: function(earthRadii) {
+          if (earthRadii > 0) {
+            return true;
+          } else {
+            return false;
+          }
+        },
+        isSmall: function(earthRadii) {
+          if (earthRadii < this.cutoff) {
+            return true;
+          } else {
+            return false;
+          }
+        },
+        changeSizes: function() {
+          let planet = this.querySelector('circle#planet');
+          var radiusScaler = this.earthRadii;
+
+          // The planet is huge! Show Jupiter to scale too.
+          if (this.earthRadii >= this.cutoff) {
+            // 11.2 is the ratio rad_jupiter / rad_earth
+            radiusScaler = radiusScaler / 11.2;
+            // Earth starts at 60px
+            this.earthWidth = this.comparisonWidth / 11.2;
+          }
+          this.exoHalfWidth = 30 * radiusScaler;
+
+          if (this.exoHalfWidth > 60) {
+            let diff = 30 - (this.exoHalfWidth - 60);
+            planet.style.transform = 'translate(' + diff + 'px, 100px)';
+            planet.style.webkitTransform = 'translate(' + diff + 'px, 100px)';
+            // planet.style.transform = 'translate(' + diff + 'px, 50px)';
+            // planet.style.webkitTransform = 'translate(' + diff + 'px, 50px)';
+          } else if (this.exoHalfWidth === 0) {
+            planet.style.display = 'none';
+          }
+        }
+      });
+    })();
+  </script>
+
+</dom-module>

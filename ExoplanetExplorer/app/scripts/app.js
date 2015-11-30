@@ -4,21 +4,26 @@
   var home = null;
   var planetInfos = [];
 
+  /*
+  Helper function to show the search query.
+   */
   function addSearchHeader(string) {
     home.innerHTML = '<h2 class="page-title">query: ' + string + '</h2>';
   };
 
+  /*
+  Helper function to create thumbnails
+   */
   function createPlanetThumb(data) {
     planetInfos.push({name: data.pl_name, data: data});
-    var pM = document.createElement('paper-material');
-    pM.elevation = '1';
+    // var pM = document.createElement('paper-material');
+    // pM.elevation = '1';
     var pT = document.createElement('planet-thumb');
     for (let d in data) {
       pT[d] = data[d];
     }
-    pT.planetInfo = data;
-    pM.appendChild(pT);
-    home.appendChild(pM);
+    // pM.appendChild(pT);
+    home.appendChild(pT);
   }
 
   function get(url) {
@@ -57,6 +62,7 @@
   };
 
   function loadSequence() {
+    // Proj: Part 1 code goes here!
     home = document.querySelector('section[data-route="home"]');
     return getJSON('/data/earth-like-results.json')
       .then(function(d) {
@@ -74,15 +80,18 @@
         }, Promise.resolve())
       })
       .then(function() {
+        // Proj: this will need to be added before migrating loading logic to routing.html
         return planetInfos;
       })
   };
 
   window.addEventListener('WebComponentsReady', function() {
-    // loadSequence()
+    // Proj: Uncomment for start of project
+    // loadSequence();
   });
+
+  // Proj: add when moving routing logic to routing.html
   return {
-    get: get,
     getJSON: getJSON,
     loadSequence: loadSequence
   }

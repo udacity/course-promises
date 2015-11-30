@@ -3,6 +3,7 @@
 Copyright (c) 2015 Udacity. All rights reserved.
 -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../planet-visualizer/planet-visualizer.html">
 
 <dom-module id="planet-info">
   <template>
@@ -11,12 +12,31 @@ Copyright (c) 2015 Udacity. All rights reserved.
       :host {
         display: block;
       }
-      .info {
-        padding-left: 32px;
+      planet-visualizer {
+        margin-left: auto;
+        margin-right: auto;
       }
     </style>
-      <div class="layout horizontal">
-      <div>Full info for: {{pl_name}}, which is {{st_dist}}pc away.</div>
+    <paper-material elevation="1">
+      <div class="layout vertical">
+      <planet-visualizer 
+        color$="{{color}}"
+        earth-radii$="{{earthRadii}}">
+      </planet-visualizer>
+      <h2>{{pl_name}}</h2>
+      <div class="vacation">
+        <h3>Vacation Info</h3>
+        <p>It is {{distance}} ly away</p>
+      </div>
+      <div class="basic">
+        <h3>Basic Info</h3>
+        <p>Some basic info!</p>
+      </div>
+      <div class="detailed">
+        <h3>Detailed Info</h3>
+        <p>Some detailed info!</p>
+      </div>
+    </paper-material>
   </template>
 
   <script>
@@ -28,8 +48,7 @@ Copyright (c) 2015 Udacity. All rights reserved.
         properties: {
           pl_name: {
             type: String,
-            notify: true,
-            value: "unknown"
+            notify: true
           },
           pl_rade: {
             type: Number,
@@ -39,29 +58,20 @@ Copyright (c) 2015 Udacity. All rights reserved.
             type: Number,
             notify: true
           },
-          exoHalfWidth: {
+          earthRadii: {
             type: Number,
             notify: true,
-            value: 40
-          },
-          exoDisplay: {
-            type: String,
-            notify: true,
-            value: "none"
-          },
-          exoTranslateX: {
-            type: Number,
-            notify: true,
-            value: 0
-          },
-          exoTranslateY: {
-            type: Number,
-            notify: true,
-            value: 0
+            // computed: 'getRadiusScale(pl_rade, pl_radj)'
+            value: 22
           },
           st_dist: {
             type: Number,
             notify: true
+          },
+          distance: {
+            type: String,
+            computed: 'pcToLy(st_dist)',
+            value: 'unknown'
           },
           pl_massj: {
             type: Number,
@@ -76,6 +86,11 @@ Copyright (c) 2015 Udacity. All rights reserved.
             notify: true,
             value: 0
           },
+          color: {
+            type: String,
+            notify: true,
+            computed: 'tempToColor(pl_eqt)'
+          },
           pl_telescope: {
             type: String,
             notify: true,
@@ -87,7 +102,35 @@ Copyright (c) 2015 Udacity. All rights reserved.
             value: 'unknown'
           }
         },
-        ready: function() {
+        getRadiusScale: function(earthRad, jupiterRad) {
+          if (!earthRad && !jupiterRad) {
+            return 0;
+          } else if (earthRad) {
+            return earthRad;
+          } else {
+            return jupiterRad * 11.2;
+          }
+        },
+        tempToColor: function(temp) {
+          // TODO: add more colors. needs super hot and super cold
+          var color = '#ccc';
+          if (temp < 273) {
+            color = '#99f';
+          } else if (temp > 313) {
+            color = '#f99';
+          }
+          return color;
+        },
+        pcToLy: function(dist) {
+          // gotta respect sigfigs
+          // TODO: clean this up?
+          let digits = dist.toString().length;
+          if (!digits) {
+            return 'unknown';
+          }
+          var ly = (dist / 3.26).toString();
+          ly = ly.slice(0,digits);
+          return ly.toString();
         }
       });
     })();
