@@ -3,7 +3,7 @@
 Copyright (c) 2015 Udacity. All rights reserved.
 -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../planet-visualizer/planet-visualizer.html">
+<link rel="import" href="../scale-visualizer/scale-visualizer.html">
 
 <dom-module id="planet-info">
   <template>
@@ -12,17 +12,24 @@ Copyright (c) 2015 Udacity. All rights reserved.
       :host {
         display: block;
       }
-      planet-visualizer {
+      paper-material {
+        padding: 16px;
+      }
+      .vis {
         margin-left: auto;
         margin-right: auto;
+        max-width: 75%;
+        /*height: 300px;*/
       }
     </style>
     <paper-material elevation="1">
       <div class="layout vertical">
-      <planet-visualizer 
-        color$="{{color}}"
-        earth-radii$="{{earthRadii}}">
-      </planet-visualizer>
+      <div class="vis">
+        <scale-visualizer
+          color$="{{color}}"
+          earth-radii$="{{earthRadii}}">
+        </scale-visualizer>
+      </div>
       <h2>{{pl_name}}</h2>
       <div class="vacation">
         <h3>Vacation Info</h3>
@@ -61,8 +68,8 @@ Copyright (c) 2015 Udacity. All rights reserved.
           earthRadii: {
             type: Number,
             notify: true,
-            // computed: 'getRadiusScale(pl_rade, pl_radj)'
-            value: 22
+            computed: 'getRadiusScale(pl_rade, pl_radj)'
+            // value: 22
           },
           st_dist: {
             type: Number,

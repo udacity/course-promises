@@ -3,7 +3,7 @@
 Copyright (c) 2015 Udacity. All rights reserved.
 -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../earth-img/earth-img.html">
+<link rel="import" href="../scale-visualizer/scale-visualizer.html">
 
 <dom-module id="planet-thumb">
   <template>
@@ -20,27 +20,15 @@ Copyright (c) 2015 Udacity. All rights reserved.
         color: #212121;
         cursor: pointer;
       }
-      circle {
-        transform: translate(30px, 50px);
-      }
-      .planet-comparison {
-        background: #000000;
-        width: 180px;
-        height: 100px;
-      }
-      .no-radius {
-        color: white;
-        font-size: 2em;
-        padding-left: 35px;
-      }
-      .no-radius::after{
-        content: "?";
-      }
-      earth-img {
-        padding-top: 20px;
-        padding-right: 10px;
+      .vis {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 300px;
       }
       @media screen and (max-width: 435px) {
+        .vis {
+          max-width: 75%;
+        }
         .top {
           /* I'm only doing this because I have to... */
           display: block !important;
@@ -67,15 +55,12 @@ Copyright (c) 2015 Udacity. All rights reserved.
     </style>
     <paper-material elevation="1">
       <a href$="/planet/{{pl_name}}">
-        <div class="top layout horizontal">
-          <div class="planet-comparison layout horizontal justified">
-            <p class="no-radius" hidden="{{radiusScale}}"></p>
-            <svg width="200px">
-              <g fill$="{{color}}" stroke-width="0.5">
-                <circle r$="{{exoHalfWidth}}" />
-              </g>
-            </svg>
-            <earth-img width="60px"></earth-img>
+        <div class="layout vertical">
+          <div class="vis">
+            <scale-visualizer
+              color$="{{color}}"
+              earth-radii$="{{earthRadii}}">
+            </scale-visualizer>
           </div>
           <div class="top-right">
             <p class="title">{{pl_name}}</p>
@@ -106,12 +91,11 @@ Copyright (c) 2015 Udacity. All rights reserved.
           	type: Number,
           	notify: true
           },
-          radiusScale: {
+          earthRadii: {
             type: Number,
             notify: true,
-            computed: 'getRadiusScale(pl_rade, pl_radj)',
-            observer: 'changeSizes'
-            // value: 7
+            computed: 'getRadiusScale(pl_rade, pl_radj)'
+            // value: 1
           },
           exoHalfWidth: {
             type: Number,
@@ -173,7 +157,14 @@ Copyright (c) 2015 Udacity. All rights reserved.
           return ly;
         },
         tempToColor: function(temp) {
-          return "brown";
+          // TODO: add more colors. needs super hot and super cold
+          var color = '#ccc';
+          if (temp < 273) {
+            color = '#99f';
+          } else if (temp > 313) {
+            color = '#f99';
+          }
+          return color;
         },
         changeSizes: function() {
           let circle = this.querySelector('circle');
