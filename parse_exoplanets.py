@@ -36,6 +36,7 @@ all_data = json.loads(output)
 
 keys_to_delete = []
 
+# kill empty data
 for row in all_data:
     line = all_data.index(row)
     for key in row:
