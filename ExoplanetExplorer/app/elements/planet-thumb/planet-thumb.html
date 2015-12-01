@@ -95,6 +95,12 @@ Copyright (c) 2015 Udacity. All rights reserved.
             type: Number,
             notify: true,
             computed: 'getRadiusScale(pl_rade, pl_radj)'
+            // value: 1
+          },
+          exoHalfWidth: {
+            type: Number,
+            notify: true,
+            value: 40
           },
           st_dist: {
           	type: Number,
@@ -146,12 +152,9 @@ Copyright (c) 2015 Udacity. All rights reserved.
         pcToLy: function(dist) {
           // gotta respect sigfigs
           let digits = dist.toString().length;
-          if (!digits) {
-            return 'unknown';
-          }
           var ly = (dist / 3.26).toString();
           ly = ly.slice(0,digits);
-          return ly.toString();
+          return ly;
         },
         tempToColor: function(temp) {
           // TODO: add more colors. needs super hot and super cold
