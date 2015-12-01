@@ -1,0 +1,168 @@
+<!--
+@license
+Copyright (c) 2015 Udacity. All rights reserved.
+-->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../scale-visualizer/scale-visualizer.html">
+
+<dom-module id="planet-info">
+  <template>
+    <style include="shared-styles"></style>
+    <style>
+      :host {
+        display: block;
+      }
+      paper-material {
+        padding: 16px;
+      }
+      .vis {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 75%;
+      }
+      p.subtext {
+        font-style: italic;
+        font-size: 0.75em;
+        line-height: 0.5em;
+      }
+    </style>
+    <paper-material elevation="1">
+      <div class="layout vertical">
+      <div class="vis" hidden$="{{!doesntExist(earthRadii)}}">
+        <scale-visualizer
+          color$="{{color}}"
+          earth-radii$="{{earthRadii}}">
+        </scale-visualizer>
+        <p class="subtext">Earth and {{pl_name}} to scale</p>
+      </div>
+      <h2>{{pl_name}}</h2>
+      <div class="vacation">
+        <h3>Thinking about vacationing here?</h3>
+        <p hidden$="{{!doesntExist(distance)}}">At {{distance}} lightyears away, you'll need {{getTime(distance)}} years to reach {{pl_name}} if you're traveling <a href="http://www.aerospaceweb.org/question/performance/q0023.shtml">as fast as any human vehicle has ever gone</a>.</p>
+        <p hidden$="{{!doesntExist(pl_pnum)}}">{{pl_name}} is just one of {{pl_pnum}} planets orbiting {{starName}}.</p>
+        <p hidden$="{{!doesntExist(pl_pnum)}}">{{pl_name}} is the only planet orbiting {{starName}}.</p>
+      </div>
+      <div class="basic">
+        <h3>Basic Info</h3>
+        <p>Some basic info!</p>
+      </div>
+      <div class="detailed">
+        <h3>Detailed Info</h3>
+        <p>Some detailed info!</p>
+      </div>
+    </paper-material>
+  </template>
+
+  <script>
+    (function () {
+      'use strict';
+
+      Polymer({
+        is: 'planet-info',
+        properties: {
+          pl_name: {
+            type: String,
+            notify: true
+          },
+          pl_rade: {
+            type: Number,
+            notify: true
+          },
+          pl_radj: {
+            type: Number,
+            notify: true
+          },
+          earthRadii: {
+            type: Number,
+            notify: true,
+            computed: 'getRadiusScale(pl_rade, pl_radj)'
+          },
+          st_dist: {
+            type: Number,
+            notify: true
+          },
+          distance: {
+            type: String,
+            notify: true,
+            computed: 'pcToLy(st_dist)'
+          },
+          pl_massj: {
+            type: Number,
+            notify: true
+          },
+          pl_masse: {
+            type: Number,
+            notify: true
+          },
+          pl_eqt: {
+            type: Number,
+            notify: true,
+            value: 0
+          },
+          color: {
+            type: String,
+            notify: true,
+            computed: 'tempToColor(pl_eqt)'
+          },
+          pl_telescope: {
+            type: String,
+            notify: true,
+            value: 'unknown'
+          },
+          pl_disc: {
+            type: Number,
+            notify: true,
+            value: 'unknown'
+          },
+          pl_pnum: {
+            type: Number,
+            notify: true
+          }
+        },
+        getRadiusScale: function(earthRad, jupiterRad) {
+          if (!earthRad && !jupiterRad) {
+            return 0;
+          } else if (earthRad) {
+            return earthRad;
+          } else {
+            return jupiterRad * 11.2;
+          }
+        },
+        tempToColor: function(temp) {
+          // TODO: add more colors. needs super hot and super cold
+          var color = '#ccc';
+          if (temp < 273) {
+            color = '#99f';
+          } else if (temp > 313) {
+            color = '#f99';
+          }
+          return color;
+        },
+        pcToLy: function(dist) {
+          // gotta respect sigfigs
+          let digits = dist.toString().length;
+          if (!digits) {
+            return null;
+          }
+          var ly = (dist / 3.26).toString();
+          ly = ly.slice(0,digits);
+          return ly.toString();
+        },
+        doesntExist: function(val) {
+          if (val) {
+            return true;
+          } else {
+            return false;
+          }
+        },
+        getTime: function(ly) {
+          let digits = ly.toString().length;
+          // http://www.aerospaceweb.org/question/performance/q0023.shtml
+          var years = (ly / 0.000234).toString();
+          return years.slice(0,digits);
+        }
+      });
+    })();
+  </script>
+
+</dom-module>

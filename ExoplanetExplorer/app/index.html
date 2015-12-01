@@ -16,7 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="generator" content="Polymer Starter Kit" />
-  <title>YouPromised</title>
+  <title>Exoplanet Explorer</title>
   <!-- Place favicon.ico in the `app/` directory -->
 
   <!-- Chrome for Android theme color -->
@@ -71,12 +71,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <!-- Application name -->
           <div class="middle middle-container center horizontal layout">
-            <div class="app-name">YouPromised</div>
+            <div class="app-name">Exoplanet Explorer</div>
           </div>
 
           <!-- Application sub title -->
           <div class="bottom bottom-container center horizontal">
-            <div class="bottom-title paper-font-subhead">Music Videos for Broken Promises</div>
+            <div class="bottom-title paper-font-subhead">Learn more about planets around other stars!</div>
           </div>
 
         </paper-toolbar>
@@ -87,8 +87,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             <section data-route="home"></section>
 
-            <section data-route="video-info">
-              <p>Title: {{params.title}}</p>
+            <section data-route="planet">
+              <planet-info></planet-info>
+            </section>
+
+            <section data-route="contact">
+              <p>Cameron</p>
+              <a href="/home">go home</a>
             </section>
 
           </iron-pages>
@@ -115,8 +120,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   </template>
 
+  <!-- Uncomment for part 1 -->
   <!-- build:js scripts/app.js -->
-  <script src="scripts/app.js"></script>
+  <!-- <script src="scripts/app.js"></script> -->
   <!-- endbuild-->
 
   <!-- build:js scripts/animate-header-transitions.js -->
