@@ -15,8 +15,6 @@ Copyright (c) 2015 Udacity. All rights reserved.
       }
       svg {
         display: block;
-        margin-top: auto;
-        margin-right: auto;
         height: 100%;
       }
       circle {
@@ -25,7 +23,6 @@ Copyright (c) 2015 Udacity. All rights reserved.
       }
       .wrapper {
         background: #000000;
-        /*margin: 10px;*/
       }
       .planet-comparison {
         width: 100%;
@@ -48,15 +45,12 @@ Copyright (c) 2015 Udacity. All rights reserved.
         content: "?";
       }
       earth-img,jupiter-img {
-        /*padding-right: 10px;*/
         margin-top: auto;
         margin-bottom: auto;
-        margin-left: auto;
-        margin-right: auto;
       }
     </style>
     <div class="wrapper">
-      <div class="planet-comparison layout horizontal around-justified">
+      <div class="planet-comparison layout horizontal">
         <p class="no-radius" hidden$="{{hasRadius(earthRadii)}}"></p>
         <svg class="planet-container" width="300px" height="100%">
           <g fill$="{{color}}" stroke-width="0.5">
@@ -158,7 +152,6 @@ Copyright (c) 2015 Udacity. All rights reserved.
           // console.log(element.getBoundingClientRect());
 
           let planet = this.querySelector('circle#planet');
-          let planetContainer = this.querySelector('.planet-container');
           var radiusScaler = this.earthRadii;
           if (!radiusScaler) {
             planet.style.display = 'none';
