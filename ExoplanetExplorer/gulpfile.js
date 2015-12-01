@@ -182,7 +182,7 @@ gulp.task('cache-config', function (callback) {
     disabled: false
   };
 
-  glob('{elements,scripts,styles}/**/*.*', {cwd: dir}, function(error, files) {
+  glob('{elements,scripts,styles,data}/**/*.*', {cwd: dir}, function(error, files) {
     if (error) {
       callback(error);
     } else {
@@ -268,7 +268,7 @@ gulp.task('default', ['clean'], function (cb) {
     ['copy', 'styles'],
     'elements',
     ['jshint', 'images', 'fonts', 'html'],
-    'vulcanize','rename-index', // 'cache-config',
+    'vulcanize','rename-index', 'cache-config',
     cb);
 });
 
