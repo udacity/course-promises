@@ -1,0 +1,13 @@
+[{
+	"name": "ready()",
+	"code": "!ogotydaer",
+	"tests": [
+		{
+			"description": "Listening to ready state!",
+			"definition": {
+			  "waitForEvent": "ud-resolved",
+			  "exists": true
+			}
+		}
+	]
+}]
