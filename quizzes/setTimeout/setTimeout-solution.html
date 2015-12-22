@@ -17,15 +17,9 @@
 			});
 		};
 
-		/*
-		Uncomment these lines when you want to test!
-		You'll know you've done it right when the message on the page changes.
-		 */
 		var milliseconds = 2000;
 		wait(milliseconds).then(finish);
 
-
-		// This is just here to help you test.
 		function finish() {
 			var completion = document.querySelector('.completion');
 			completion.innerHTML = "Complete after " + milliseconds + "ms.";
