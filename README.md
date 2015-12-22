@@ -1,4 +1,3 @@
-# course-promises
-Resources for JS Promises course
+# Udacity Course - JavaScript Promises
 
-YouPromised based on the [Polymer Starter Kit](https://github.com/polymerelements/polymer-starter-kit/releases/latest).
+### [Resources for the Udacity JS Promises course](https://udacity.com/ud898) (ud898)
